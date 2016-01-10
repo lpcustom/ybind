@@ -18,9 +18,9 @@ Do not attempt to use ybind at this time. It is in very early development.
 -----
 
 ###### Uses:
- | function | description |
- | -------- | ----------- |
- |ybind.ready(function() {...});|fired when ybind has fully loaded|
- 
- |ybind.set(key,value);|used to set a key to a specific (currently only useful for primitives with objects and arrays coming soon)|
+
+| function | description |
+| -------- | ----------- |
+|ybind.ready(function() {...});|fired when ybind has fully loaded|
+|ybind.set(key,value);|used to set a key to a specific (currently only useful for primitives with objects and arrays coming soon)|
  
