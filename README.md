@@ -17,10 +17,10 @@ Early Development; Do not use unless you wish to contribute to the code!
 Do not attempt to use ybind at this time. It is in very early development.
 -----
 
-###### Uses:
-
-| function | description |
-| -------- | ----------- |
-|ybind.ready(function() {...});|fired when ybind has fully loaded|
-|ybind.set(key,value);|used to set a key to a specific (currently only useful for primitives with objects and arrays coming soon)|
- 
+| Notes on Usage|
+| -------- |
+| `ybind.ready(function() {...});` <br>Fired when ybind has fully loaded. Include all your initial logic here. |
+| `ybind.set(key,value);` <br> Used to set a key to a specific value. This is currently only useful for primitives. Objects and arrays coming soon!|
+| `<input data-bind-to='key' />` <br> Used to set the value from a form element (one way binding where the user changes the value |
+| `<span data-bind-from='key'>` <br> Used to set the value from javascript (one way binding where the browser changes the value of the data | 
+| Using both `data-bind-from` and `data-bind-to` with the same attribute value <key> will simulate two-way data-binding for an input element |
