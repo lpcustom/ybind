@@ -1,9 +1,12 @@
-ybind
-======
+### ybind
+
 *Easy Directional Data Binding*
 
-Early Development; Do not use unless you wish to contribute to the code!
--------
+___
+
+**Do not use unless you wish to contribute to the code!**
+
+___
 
  I love data-binding using a library like AngularJS, but I've found that large datasets pose a problem for the two-way approach. In a lot of cases, the data that you need to bind to is only needed in a one-way approach. Meaning that, instead of DOM changes making instant changes to javascript values and getting updates automatically when javascript values change elsewhere, it's usually better to only read from those javascript values when they change in one direction.
  
@@ -12,9 +15,12 @@ Early Development; Do not use unless you wish to contribute to the code!
  
  To hopefully alleviate some of the issues that present themselves when working with two-way data-binding in javascript, I've created ybind. The focus of ybind is to be light and flexible. It's also meant to be simple to use. 
 
-Early Development; Do not use unless you wish to contribute to the code!
------
+___
 
+**Do not use unless you wish to contribute to the code!**
+
+___
+<br>
 | Notes on Usage|
 | -------- |
 | `ybind.ready(function() {...});` <br>Fired when ybind has fully loaded. Include all your initial logic here. |
