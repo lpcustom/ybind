@@ -8,12 +8,13 @@ ___
 
 ___
 
- I love data-binding using a library like AngularJS, but I've found that large datasets pose a problem for the two-way approach. In a lot of cases, the data that you need to bind to is only needed in a one-way approach. Meaning that, instead of DOM changes making instant changes to javascript values and getting updates automatically when javascript values change elsewhere, it's usually better to only read from those javascript values when they change in one direction.
+I love data-binding using a library like AngularJS, but I've found that large datasets pose a problem for the two-way approach. In a lot of cases, the data that you need to bind is only needed in a one-way approach. Meaning that, DOM changes can make one-way instant changes to javascript values without a watch or javascript value updates change the dom values when required. This approach eliminates labor-intense watcher loops and allows developers to get the same functionality as two-way binding with faster browser response times.
  
- Another issue I have with Angular two-way binding is that I would prefer to have the power to influence when the DOM is updated with new values from the server. That allows for no interval of watchers. This simply means that instead of just updating the values in javascript and expecting the binding library to automatically update the values on the DOM, in ybind, we apply those changes when we need them to occur via:
- `ybind.apply()`
+Another issue I have with Angular two-way binding is that I would prefer to have the power to influence when the DOM is updated with new values from the server. That allows for no interval of watchers. This simply means that instead of just updating the values in javascript and expecting the binding library to automatically update the values on the DOM, in ybind, we apply those changes when we need them to occur via:
+
+`ybind.apply()`
  
- To hopefully alleviate some of the issues that present themselves when working with two-way data-binding in javascript, I've created ybind. The focus of ybind is to be light and flexible. It's also meant to be simple to use. 
+To hopefully alleviate some of the issues that present themselves when working with two-way data-binding in javascript, I've created ybind. The focus of ybind is to be light and flexible. It's also meant to be simple to use. 
 
 ___
 
