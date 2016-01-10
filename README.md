@@ -24,21 +24,16 @@ ___
 
 ######Notes on Usage
 
-`ybind.ready(function() {...});`
-Fired when ybind has fully loaded. Include all your initial logic here.
+`ybind.ready(function() {...});` <br> Fired when ybind has fully loaded. Include all your initial logic here.
 
-`ybind.set(key,value);`
-Used to set a key to a specific value. This is currently only useful for primitives. Objects and arrays coming soon!
+`ybind.set(key,value);` <br> Used to set a key to a specific value. This is currently only useful for primitives. Objects and arrays coming soon!
 
-`<input data-bind-to='key' />`
-Used to set the value from a form element (one way binding where the user changes the value.
+`<input data-bind-to='key' />` <br> Used to set the value from a form element (one way binding where the user changes the value.
 
-`<span data-bind-from='key'>`
-Used to set the value from javascript (one way binding where the browser changes the value of the data. 
+`<span data-bind-from='key'>` <br> Used to set the value from javascript (one way binding where the browser changes the value of the data. 
 
 Using both `data-bind-from` and `data-bind-to` with the same attribute value <key> will simulate two-way data-binding for an input element.
 
-`ybind.apply()` 
-Used to apply changes which have just been made to the javascript value to the DOM
+`ybind.apply()` <br> Used to apply changes which have just been made to the javascript value to the DOM
 
 -------
