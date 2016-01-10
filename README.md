@@ -12,7 +12,7 @@ Early Development; Do not use unless you wish to contribute to the code!
  
  To hopefully alleviate some of the issues that present themselves when working with two-way data-binding in javascript, I've created ybind. The focus of ybind is to be light and flexible. It's also meant to be simple to use. 
 
-Do not attempt to use ybind at this time. It is in very early development.
+Early Development; Do not use unless you wish to contribute to the code!
 -----
 
 | Notes on Usage|
