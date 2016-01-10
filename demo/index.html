@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title>Demo of YBind</title>
+        <link rel="stylesheet" href="css/site.css" />
+        <script src="../src/ybind.js"></script>
+        <script src="js/site.js"></script>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr><td><span class="label">Value of test 1</span></td><td><span data-bind-from="test1"></span></td></tr>
+                <tr><td><span class="label">Value of test 2</span></td><td><span data-bind-from="test2"></span></td></tr>
+                <tr><td><span class="label">Value of test 3</span></td><td><span data-bind-from="test3"></span></td></tr>
+                <tr><td><span class="label">Value of test 4</span></td><td><span data-bind-from="test4"></span></td></tr>
+                <tr><td><span class="label">Value of test 5</span></td><td><span data-bind-from="test5"></span></td></tr>
+                <tr><td><span class="label">Value of test 6</span></td><td><span data-bind-from="test6"></span></td></tr>
+                <tr><td><span class="label">Alter two-way test 6</span></td><td><input type="text" data-bind-to="test6" data-bind-from="test6" /></td></tr>
+            </table>
+        </div>
+    </body>
+</html>
