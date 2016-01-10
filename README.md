@@ -22,7 +22,7 @@ ___
 
 ___
 <br>
-| Notes on Usage|
+| Notes on Usage |
 | -------- |
 | `ybind.ready(function() {...});` <br>Fired when ybind has fully loaded. Include all your initial logic here. |
 | `ybind.set(key,value);` <br> Used to set a key to a specific value. This is currently only useful for primitives. Objects and arrays coming soon!|
