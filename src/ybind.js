@@ -38,7 +38,7 @@ var ybind = {
             var id = elements[i].getAttribute('data-bind-from');
             if(window.addEventListener) {
                 elements[i].addEventListener('fromUpdated', function(event) {
-                    if(this.tagName.toLowerCase() === "input") {
+                    if(this.tagName.toLowerCase() === "input" || this.tagName.toLowerCase() === 'select') {
                         if(this.value !== event.detail) {
                             this.value = event.detail;
                         }
@@ -50,7 +50,7 @@ var ybind = {
                 });
             } else if (window.attachEvent) {
                 elements[i].attachEvent('fromUpdated', function(event) {
-                    if(this.tagName.toLowerCase() === "input") {
+                    if(this.tagName.toLowerCase() === "input" || elements[i].tagName.toLowerCase() === 'select') {
                         if(this.value !== event.detail) {
                             this.value = event.detail;
                         }
@@ -65,7 +65,7 @@ var ybind = {
                 ybind.bindObjs[id].elements.push(elements[i]);
             } else {
                 var v = null;
-                if(elements[i].tagName.toLowerCase() === 'input') {
+                if(elements[i].tagName.toLowerCase() === 'input' || elements[i].tagName.toLowerCase() === 'select') {
                     v = elements[i].value;
                 } else {
                     v = elements[i].innerHTML;
