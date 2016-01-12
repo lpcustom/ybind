@@ -4,7 +4,7 @@ var ybind = {
     bindFromReady: false,
     bindToReady: false,
     ready: false,
-    changeEvent: function(ele) {
+    changeEvent: function(ele,event) {
         var key     = ele.getAttribute('data-bind-to');
         v = ele.value;
         ybind.set(key, v);
@@ -22,13 +22,13 @@ var ybind = {
             var v = null;
 
             if(window.addEventListener) {
-                elements[i].addEventListener('change', function() { ybind.changeEvent(this); });
-                elements[i].addEventListener('keyup', function() { ybind.changeEvent(this); });
-                elements[i].addEventListener('paste', function() { ybind.changeEvent(this); });
+                elements[i].addEventListener('change', function(e) { ybind.changeEvent(this,e); });
+                elements[i].addEventListener('keyup', function(e) { ybind.changeEvent(this,e); });
+                elements[i].addEventListener('paste', function(e) { ybind.changeEvent(this,e); });
             } else if(window.attachEvent) {
-                elements[i].attachEvent('onchange', function() { ybind.changeEvent(this); });
-                elements[i].attachEvent('onkeyup', function() { ybind.changeEvent(this); });
-                elements[i].attachEvent('onpaste', function() { ybind.changeEvent(this); });
+                elements[i].attachEvent('onchange', function(e) { ybind.changeEvent(this,e); });
+                elements[i].attachEvent('onkeyup', function(e) { ybind.changeEvent(this,e); });
+                elements[i].attachEvent('onpaste', function(e) { ybind.changeEvent(this,e); });
             }
         }
         ybind.bindToReady = true;
@@ -47,9 +47,13 @@ var ybind = {
             element = document.querySelector('[data-yid="yb-' + ybind.bindObjs[i].id + '"]');
             if(typeof element !== 'undefined' && element !== null) {
                 if(element.tagName.toLowerCase() === "input") {
-                    element.value = ybind.bindObjs[i].value;
+                    if(element.value !== ybind.bindObjs[i].value) {
+                        element.value = ybind.bindObjs[i].value;
+                    }
                 } else {
-                    element.innerHTML = ybind.bindObjs[i].value;
+                    if(element.value !== ybind.bindObjs[i].value) {
+                        element.innerHTML = ybind.bindObjs[i].value;
+                    }
                 }
             }
         }
