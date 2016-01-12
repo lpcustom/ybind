@@ -21,15 +21,14 @@ var ybind = {
             elements[i].setAttribute("data-yid", "yb-" + id);
             var v = null;
 
-            var ele = elements[i];
             if(window.addEventListener) {
-                elements[i].addEventListener('change', function() { ybind.changeEvent(ele); });
-                elements[i].addEventListener('keyup', function() { ybind.changeEvent(ele); });
-                elements[i].addEventListener('paste', function() { ybind.changeEvent(ele); });
+                elements[i].addEventListener('change', function() { ybind.changeEvent(this); });
+                elements[i].addEventListener('keyup', function() { ybind.changeEvent(this); });
+                elements[i].addEventListener('paste', function() { ybind.changeEvent(this); });
             } else if(window.attachEvent) {
-                elements[i].attachEvent('onchange', function() { ybind.changeEvent(ele); });
-                elements[i].attachEvent('onkeyup', function() { ybind.changeEvent(ele); });
-                elements[i].attachEvent('onpaste', function() { ybind.changeEvent(ele); });
+                elements[i].attachEvent('onchange', function() { ybind.changeEvent(this); });
+                elements[i].attachEvent('onkeyup', function() { ybind.changeEvent(this); });
+                elements[i].attachEvent('onpaste', function() { ybind.changeEvent(this); });
             }
         }
         ybind.bindToReady = true;
