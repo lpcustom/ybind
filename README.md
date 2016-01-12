@@ -24,7 +24,7 @@ ___
 
 ######Notes on Usage
 
-  * `ybind.ready(function() {...});` <br> Fired when ybind has fully loaded. Include all your initial logic here.  
+  * `ybind.ready(function() {...});` <br> Fired when ybind has fully loaded. Include all your initial logic here. Note this will be changed soon. We don't want to rely on the ready function for all code, but currently it is necessary to confirm that the library has processed all UI elements correctly. We will be deferring things correctly later. 
   * `ybind.set(key,value);` <br> Used to set a key to a specific value. This is currently only useful for primitives. Objects and arrays coming soon!  
   * `<input data-bind-to='key' />` <br> Used to set the value from a form element (one-way binding where the user changes the value.  
   * `<span data-bind-from='key'>` <br> Used to set the value from javascript (one-way binding where the browser changes the value of the data).   
