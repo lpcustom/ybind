@@ -8,19 +8,40 @@ var ybind = {
     startBindTo: function() {
         var elements = document.querySelectorAll('[data-bind-to]');
         for(var i = 0; i < elements.length; i++) {
-            var id  = ybind.getNextId();
-            var obj = { key : elements[i].getAttribute('data-bind-to'), value: elements[i].value, id: id };
+            var id      = ybind.getNextId();
+            var key     = elements[i].getAttribute('data-bind-to');
+            var value   = elements[i].value;
+            var obj     = { key : key, value: value, id: id };
+
             ybind.bindObjs.push(obj);
 
             elements[i].setAttribute("data-yid", "yb-" + id);
 
             if(window.addEventListener) {
                 elements[i].addEventListener('change', function() {
-                    obj.value = elements[i].value;
+                    ybind.set(key, this.value);
+                    ybind.apply();
+                });
+                elements[i].addEventListener('keyup', function() {
+                    ybind.set(key, this.value);
+                    ybind.apply();
+                });
+                elements[i].addEventListener('paste', function() {
+                    ybind.set(key, this.value);
+                    ybind.apply();
                 });
             } else if(window.attachEvent) {
-                elements[i].attachEvent("onchange", function() {
-                    obj.value = elements[i].value;
+                elements[i].attachEvent('onchange', function() {
+                    ybind.set(key, this.value);
+                    ybind.apply();
+                });
+                elements[i].attachEvent('onkeyup', function() {
+                    ybind.set(key, this.value);
+                    ybind.apply();
+                });
+                elements[i].attachEvent('onpaste', function() {
+                    ybind.set(key, this.value);
+                    ybind.apply();
                 });
             }
         }
@@ -71,7 +92,6 @@ var ybind = {
         }
     },
 
-
     _start: function() {
         "use strict";
         document.addEventListener('DOMContentLoaded', function(event) {
@@ -90,6 +110,5 @@ var ybind = {
             }
         }, 20);
     }
-
 };
 ybind._start();
