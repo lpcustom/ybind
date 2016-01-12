@@ -1,6 +1,6 @@
 var ybind = {
     nextId: 0,
-    bindObjs: [],
+    bindObjs: {},
     bindFromReady: false,
     bindToReady: false,
     ready: false,
@@ -12,68 +12,92 @@ var ybind = {
     },
     startBindTo: function() {
         var elements = document.querySelectorAll('[data-bind-to]');
-        for(var i = 0; i < elements.length; i++) {
-            var id      = ybind.getNextId();
-            var key     = elements[i].getAttribute('data-bind-to');
-            var value   = elements[i].value;
-            var obj     = { key : key, value: value, id: id };
-            ybind.bindObjs.push(obj);
-            elements[i].setAttribute("data-yid", "yb-" + id);
-            var v = null;
 
+        for(var i = 0; i < elements.length; i++) {
+            var id     = elements[i].getAttribute('data-bind-to');
+            var value   = elements[i].value;
+            var obj     = { value: value, dirty: false, elements: [] };
+            ybind.bindObjs[id] = obj;
+            var v = null;
             if(window.addEventListener) {
                 elements[i].addEventListener('change', function(e) { ybind.changeEvent(this,e); });
-                elements[i].addEventListener('keyup', function(e) { ybind.changeEvent(this,e); });
-                elements[i].addEventListener('paste', function(e) { ybind.changeEvent(this,e); });
+                elements[i].addEventListener('keyup', function(e)  { ybind.changeEvent(this,e); });
+                elements[i].addEventListener('paste', function(e)  { ybind.changeEvent(this,e); });
             } else if(window.attachEvent) {
-                elements[i].attachEvent('onchange', function(e) { ybind.changeEvent(this,e); });
-                elements[i].attachEvent('onkeyup', function(e) { ybind.changeEvent(this,e); });
-                elements[i].attachEvent('onpaste', function(e) { ybind.changeEvent(this,e); });
+                elements[i].attachEvent('onchange', function(e)    { ybind.changeEvent(this,e); });
+                elements[i].attachEvent('onkeyup', function(e)     { ybind.changeEvent(this,e); });
+                elements[i].attachEvent('onpaste', function(e)     { ybind.changeEvent(this,e); });
             }
         }
         ybind.bindToReady = true;
     },
     startBindFrom: function() {
         var elements = document.querySelectorAll('[data-bind-from]');
+
         for(var i = 0; i < elements.length; i++) {
-            var id = ybind.getNextId();
-            ybind.bindObjs.push({ key : elements[i].getAttribute('data-bind-from'), value: elements[i].innerHTML, id: id });
-            elements[i].setAttribute("data-yid", "yb-" + id);
+            var id = elements[i].getAttribute('data-bind-from');
+            if(window.addEventListener) {
+                elements[i].addEventListener('fromUpdated', function(event) {
+                    if(this.tagName.toLowerCase() === "input") {
+                        if(this.value !== event.detail) {
+                            this.value = event.detail;
+                        }
+                    } else {
+                        if(this.innerHTML !== event.detail) {
+                            this.innerHTML = event.detail;
+                        }
+                    }
+                });
+            } else if (window.attachEvent) {
+                elements[i].attachEvent('fromUpdated', function(event) {
+                    if(this.tagName.toLowerCase() === "input") {
+                        if(this.value !== event.detail) {
+                            this.value = event.detail;
+                        }
+                    } else {
+                        if(this.innerHTML !== event.detail) {
+                            this.innerHTML = event.detail;
+                        }
+                    }
+                });
+            }
+            if(typeof ybind.bindObjs[id] !== "undefined") {
+                ybind.bindObjs[id].elements.push(elements[i]);
+            } else {
+                var v = null;
+                if(elements[i].tagName.toLowerCase() === 'input') {
+                    v = elements[i].value;
+                } else {
+                    v = elements[i].innerHTML;
+                }
+                ybind.bindObjs[id] = { value: v, dirty: false, elements: [elements[i]] };
+            }
         }
         ybind.bindFromReady = true;
     },
     apply: function() {
-        for(var i = 0; i < ybind.bindObjs.length; i++) {
-            element = document.querySelector('[data-yid="yb-' + ybind.bindObjs[i].id + '"]');
-            if(typeof element !== 'undefined' && element !== null) {
-                if(element.tagName.toLowerCase() === "input") {
-                    if(element.value !== ybind.bindObjs[i].value) {
-                        element.value = ybind.bindObjs[i].value;
-                    }
-                } else {
-                    if(element.value !== ybind.bindObjs[i].value) {
-                        element.innerHTML = ybind.bindObjs[i].value;
+        for(var i in ybind.bindObjs) {
+            if(ybind.bindObjs[i].dirty) {
+                if(typeof ybind.bindObjs[i].elements !== 'undefined' && ybind.bindObjs[i].elements !== null && ybind.bindObjs[i].elements.length > 0) {
+                    for(var j = 0; j < ybind.bindObjs[i].elements.length; j++) {
+                        if(typeof ybind.bindObjs[i].elements[j] !== 'undefined' && ybind.bindObjs[i].elements[j] !== null) {
+                            var event = new CustomEvent("fromUpdated", {detail: ybind.bindObjs[i].value});
+                            ybind.bindObjs[i].elements[j].dispatchEvent(event);
+                        }
                     }
                 }
+                ybind.bindObjs[i].dirty = false;
             }
         }
-    },
-    getNextId: function() {
-        var old = ybind.nextId;
-        ybind.nextId++;
-        return old;
     },
     set: function(key, value) {
         var exists = false;
-        for(var i = 0; i < ybind.bindObjs.length; i++) {
-            if(ybind.bindObjs[i].key === key) {
-                ybind.bindObjs[i].value = value;
-                exists = true;
-            }
+        if(typeof ybind.bindObjs[key] !== 'undefined') {
+            ybind.bindObjs[key].value = value;
+            ybind.bindObjs[key].dirty = true;
         }
-        if(!exists) {
-            var id = ybind.getNextId();
-            ybind.bindObjs.push({key: key, value: value, id: id});
+        else {
+            ybind.bindObjs[key] = {value: value, dirty: true, elements: []};
         }
     },
     _start: function() {

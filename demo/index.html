@@ -17,8 +17,27 @@
                 <tr><td><span class="label">Value of test 5</span></td><td><span data-bind-from="test5"></span></td></tr>
                 <tr><td><span class="label">Value of test 6</span></td><td><span data-bind-from="test6"></span></td></tr>
                 <tr><td><span class="label">Value of test 7</span></td><td><span data-bind-from="test7"></span></td></tr>
+                <tr><td><span class="label">Value of test 8</span></td><td><span data-bind-from="test8"></span></td></tr>
                 <tr><td><span class="label">Alter two-way test 6</span></td><td><input type="text" data-bind-to="test6" data-bind-from="test6" /></td></tr>
                 <tr><td><span class="label">TextBox test 7</span></td><td><textarea data-bind-from="test7" data-bind-to="test7"></textarea></td></tr>
+                <tr>
+                    <td><span class="label">Select test 8</span></td>
+                    <td>
+                        <select data-bind-from="test8" data-bind-to="test8">
+                            <option value="234">234</option>
+                            <option value="235">235</option>
+                            <option value="236">236</option>
+                            <option value="237">237</option>
+                        </select>
+                    </td>
+                </tr>
+                <script>
+                    var html = '';
+                    for(var i = 9; i < 10000; i++) {
+                        html += "<tr><td><span class='label'>Value of Test " + i + "</span></td><td><span data-bind-from='test" + i + "'></span></td></tr>";
+                    }
+                    document.write(html);
+                </script>
             </table>
         </div>
     </body>
