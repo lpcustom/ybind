@@ -4,7 +4,7 @@
 
 ___
 
-**Do not use unless you wish to contribute to the code!**
+**Early Dev Stage: Do not use unless you wish to contribute to the code!**
 
 ___
 
@@ -18,7 +18,7 @@ To hopefully alleviate some of the issues that present themselves when working w
 
 ___
 
-**Do not use unless you wish to contribute to the code!**
+**Early Dev Stage: Do not use unless you wish to contribute to the code!**
 
 ___
 
