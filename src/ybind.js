@@ -1,5 +1,4 @@
 var ybind = {
-    nextId: 0,
     bindObjs: {},
     bindFromReady: false,
     bindToReady: false,
@@ -8,7 +7,6 @@ var ybind = {
         var key     = ele.getAttribute('data-bind-to');
         v = ele.value;
         ybind.set(key, v);
-        ybind.apply();
     },
     startBindTo: function() {
         var elements = document.querySelectorAll('[data-bind-to]');
@@ -36,6 +34,7 @@ var ybind = {
 
         for(var i = 0; i < elements.length; i++) {
             var id = elements[i].getAttribute('data-bind-from');
+            console.log(id);
             if(window.addEventListener) {
                 elements[i].addEventListener('fromUpdated', function(event) {
                     if(this.tagName.toLowerCase() === "input" || this.tagName.toLowerCase() === 'select') {
@@ -75,30 +74,37 @@ var ybind = {
         }
         ybind.bindFromReady = true;
     },
-    apply: function() {
-        for(var i in ybind.bindObjs) {
-            if(ybind.bindObjs[i].dirty) {
-                if(typeof ybind.bindObjs[i].elements !== 'undefined' && ybind.bindObjs[i].elements !== null && ybind.bindObjs[i].elements.length > 0) {
-                    for(var j = 0; j < ybind.bindObjs[i].elements.length; j++) {
-                        if(typeof ybind.bindObjs[i].elements[j] !== 'undefined' && ybind.bindObjs[i].elements[j] !== null) {
-                            var event = new CustomEvent("fromUpdated", {detail: ybind.bindObjs[i].value});
-                            ybind.bindObjs[i].elements[j].dispatchEvent(event);
-                        }
+    apply: function(key) {
+        if(ybind.bindObjs[key].dirty) {
+            if(typeof ybind.bindObjs[key].elements !== 'undefined' && ybind.bindObjs[key].elements !== null && ybind.bindObjs[key].elements.length > 0) {
+                for(var j = 0; j < ybind.bindObjs[key].elements.length; j++) {
+                    if(typeof ybind.bindObjs[key].elements[j] !== 'undefined' && ybind.bindObjs[key].elements[j] !== null) {
+                        var event = new CustomEvent("fromUpdated", {detail: ybind.bindObjs[key].value});
+                        ybind.bindObjs[key].elements[j].dispatchEvent(event);
                     }
                 }
-                ybind.bindObjs[i].dirty = false;
             }
+            ybind.bindObjs[key].dirty = false;
         }
+        return this;
     },
     set: function(key, value) {
-        var exists = false;
-        if(typeof ybind.bindObjs[key] !== 'undefined') {
-            ybind.bindObjs[key].value = value;
-            ybind.bindObjs[key].dirty = true;
+        if(!ybind.ready()) {
+            setTimeout(function() {
+                ybind.set(key,value);
+            }, 100);
+            return this;
+        } else {
+            var exists = false;
+            if(typeof ybind.bindObjs[key] !== 'undefined') {
+                ybind.bindObjs[key].value = value;
+                ybind.bindObjs[key].dirty = true;
+            }
+            else {
+                ybind.bindObjs[key] = { value: value, dirty: true, elements: [] };
+            }
         }
-        else {
-            ybind.bindObjs[key] = {value: value, dirty: true, elements: []};
-        }
+        return this.apply(key);
     },
     _start: function() {
         "use strict";
@@ -107,15 +113,12 @@ var ybind = {
             ybind.startBindFrom();
         });
     },
-    ready:function(callback) {
-        var interval = setInterval(function() {
-            if(ybind.bindFromReady && ybind.bindToReady) {
-                if(typeof callback === 'function') {
-                    clearInterval(interval);
-                    callback();
-                }
-            }
-        }, 20);
+    ready:function() {
+        if(ybind.bindFromReady && ybind.bindToReady) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 ybind._start();

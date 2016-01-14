@@ -3,14 +3,16 @@
 <html>
     <head>
         <title>Demo of YBind</title>
-        <link rel="stylesheet" href="css/site.css" />
-        <script src="../src/ybind.js"></script>
+        <link rel="stylesheet" href="css/site.css">
+        <script src="src/ybind.js"></script>
         <script src="js/site.js"></script>
+        <meta lang="en">
+        <meta charset="UTF-8">
     </head>
     <body>
         <div>
             <table>
-                <tr><td><span class="label">Value of test 1</span></td><td><span data-bind-from="test1"></span></td></tr>
+                <tr><td style="width: 180px;"><span class="label">Value of test 1</span></td><td><span data-bind-from="test1.value"></span></td></tr>
                 <tr><td><span class="label">Value of test 2</span></td><td><span data-bind-from="test2"></span></td></tr>
                 <tr><td><span class="label">Value of test 3</span></td><td><span data-bind-from="test3"></span></td></tr>
                 <tr><td><span class="label">Value of test 4</span></td><td><span data-bind-from="test4"></span></td></tr>
@@ -33,7 +35,7 @@
                 </tr>
                 <script>
                     var html = '';
-                    for(var i = 9; i < 10000; i++) {
+                    for(var i = 9; i < 101; i++) {
                         html += "<tr><td><span class='label'>Value of Test " + i + "</span></td><td><span data-bind-from='test" + i + "'></span></td></tr>";
                     }
                     document.write(html);
